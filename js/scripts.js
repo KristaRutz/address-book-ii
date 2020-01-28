@@ -1,4 +1,5 @@
 // Business Logic for AddressBook ---------
+
 function AddressBook() {
   this.contacts = [],
   this.currentId = 0
@@ -44,6 +45,7 @@ AddressBook.prototype.deleteContact = function(id) {
 }
 
 // Business Logic for Contacts ---------
+
 function Contact(firstName, lastName, phoneNumber) {
   this.firstName = firstName,
   this.lastName = lastName,
@@ -73,12 +75,15 @@ Contact.prototype.findAddress = function(id) {
   return false;
 }
 
+// Business Logic for Addresses inside Contacts ---------
+
 function Address(address, type) {
   this.address = address;
   this.type = type;
 }
 
 // User Interface Logic ---------
+
 var addressBook = new AddressBook();
 
 function displayContactDetails(addressBookToDisplay){
@@ -138,9 +143,9 @@ $(document).ready(function() {
     $("input#new-last-name").val("");
     $("input#new-phone-number").val("");
     $("input#new-address").val("");
-    $("input#address-type-selector").val("");
+    $("#address-type-selector").val("");
     $("input#new-address-2").val("");
-    $("input#address-type-selector-2").val("");
+    $("#address-type-selector-2").val("");
     var newAddress = new Address(inputtedAddress, inputtedAddressType);
     var newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber);
     newContact.addAddress(newAddress);
