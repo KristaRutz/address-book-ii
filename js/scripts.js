@@ -99,14 +99,18 @@ function attachDeleteFunction(){
   });
 }
 
-function showContact(contactId, addressId){
+function showContact(contactId){
   var contact = addressBook.findContact(contactId);
-  var address = contact.findAddress(addressId);
+  var address = contact.findAddress(1);
+  var address2 = contact.findAddress(2);
     $("#show-contact").show();
     $(".first-name").html(contact.firstName);
     $(".last-name").html(contact.lastName);
     $(".phone-number").html(contact.phoneNumber);
     $(".address").html("(" + address.type + ") " + address.address);
+    if (address2){
+      $(".address").append("<br>(" + address2.type + ") " + address2.address);
+    }
     var buttons = $("#buttons");
     buttons.empty();
     buttons.append("<button class='deleteButton' id=" + + contact.id + ">Delete Contact</button>")
@@ -115,7 +119,7 @@ function showContact(contactId, addressId){
 
 function attachContactListeners(){
   $("ul#contacts").on("click", "li", function(){
-    showContact(this.id, 1); //update this.addressId to account for multiple addresses
+    showContact(this.id); //update this.addressId to account for multiple addresses
     });
 };
 
@@ -128,14 +132,22 @@ $(document).ready(function() {
     var inputtedPhoneNumber = $("input#new-phone-number").val();
     var inputtedAddress = $("input#new-address").val();
     var inputtedAddressType = $("#address-type-selector").val();
+    var inputtedAddress2 = $("input#new-address-2").val();
+    var inputtedAddressType2 = $("#address-type-selector-2").val();
     $("input#new-first-name").val("");
     $("input#new-last-name").val("");
     $("input#new-phone-number").val("");
     $("input#new-address").val("");
     $("input#address-type-selector").val("");
+    $("input#new-address-2").val("");
+    $("input#address-type-selector-2").val("");
     var newAddress = new Address(inputtedAddress, inputtedAddressType);
     var newContact = new Contact(inputtedFirstName, inputtedLastName, inputtedPhoneNumber);
     newContact.addAddress(newAddress);
+    if (inputtedAddress2) {
+      var newAddress2 = new Address(inputtedAddress2, inputtedAddressType2);
+      newContact.addAddress(newAddress2);
+    }
     addressBook.addContact(newContact);
     console.log(addressBook.contacts);
     displayContactDetails(addressBook);
